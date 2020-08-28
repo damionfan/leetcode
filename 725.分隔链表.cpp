@@ -13,6 +13,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+/*
 class Solution {
 public:
     vector<ListNode*> splitListToParts(ListNode* root, int k) {
@@ -84,5 +85,47 @@ public:
         return output;
     }
 };
+*/
+
+class Solution {
+public:
+    vector<ListNode*> splitListToParts(ListNode* root, int k) {
+        
+
+        auto count = 0;
+
+        ListNode* p =root;
+        while (p)
+        {
+            count += 1;
+            p = p->next;
+        }
+
+        vector<int> nums(k,count/k);
+
+        for(auto i =0;i<count%k;i++)
+            nums[i]++;
+        
+        vector<ListNode*> ret(k,nullptr);
+        if(root==nullptr) return ret;
+        
+        ListNode* start;
+        start = root;
+        for(auto i=0;i<k;i++){
+            ret[i] = start;
+            while(nums[i]){
+                nums[i] -- ;
+                root = start;
+                start = start->next;
+            }
+            root->next=nullptr;
+        }
+
+        return ret;
+        
+    
+    }
+};
+
 // @lc code=end
 
